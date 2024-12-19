@@ -1,0 +1,84 @@
+<ion-header [translucent]="true" class="ion-no-border ion-padding">
+    <ion-list-header class="ion-padding-top">
+      <ion-label color="primary" class="ion-text-center">
+        <h1>Personal Info</h1>
+      </ion-label>
+    </ion-list-header>
+</ion-header>
+
+<ion-content class="ion-no-border">
+  <ion-list>
+  <ion-item-group class="ion-margin-horizontal">
+    <div class="preview">
+      <ion-avatar (click)="presentImageSourceActionSheet()">
+        <img *ngIf="imageUrl; else placeholder_avatar;" [src]="imageUrl" />
+        <ng-template #placeholder_avatar>
+          <div class="fallback">
+            <p *ngIf="!approve2">Select avatar</p>
+            <ion-progress-bar *ngIf="approve2" color='light' type="indeterminate"></ion-progress-bar>
+          </div>
+        </ng-template>
+      </ion-avatar>
+    </div>
+
+    <form [formGroup]="form">
+      <div class="ion-margin-vertical">
+        <ion-item class="ion-margin">
+          <ion-input formControlName="fullname" placeholder="First Name" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="ion-margin">
+          <ion-input formControlName="lastname" placeholder="Last Name" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="ion-margin">
+          <ion-input formControlName="email" placeholder="Your Email" type="email"></ion-input>
+        </ion-item>
+
+        <ion-item class="ion-margin">
+          <ion-input formControlName="driverLicense" placeholder="Driver License" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="ion-margin" (click)="selectDriverLicenseImage()">
+          <ion-label>Driver License Image</ion-label>
+          <ion-icon name="image"></ion-icon>
+        </ion-item>
+      </div>
+
+      <ion-list-header class="ion-padding-top">
+        <ion-label color="primary" class="ion-text-center">
+          <h1>Car Info</h1>
+        </ion-label>
+      </ion-list-header>
+
+      <div class="ion-margin-vertical">
+        <ion-item class="ion-margin">
+          <ion-input formControlName="plateNumber" placeholder="Plate Number" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="ion-margin">
+          <ion-select formControlName="carType" placeholder="Select Car Type">
+            <ion-select-option *ngFor="let type of cartypes" [value]="type">{{ type.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="ion-margin">
+          <ion-input formControlName="carName" placeholder="Car Name" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="ion-margin">
+          <ion-input formControlName="mileage" placeholder="Mileage" type="number"></ion-input>
+        </ion-item>
+      </div>
+    </form>
+
+    <div id="recaptcha-container"></div>
+
+    <ion-button shape="round" size="large" type="submit" [disabled]="!form.valid" color="primary" (click)="updateProfile()" expand="block">
+      <ion-label *ngIf="!approve2">Continue</ion-label>
+      <ion-icon *ngIf="!approve2" color='light' slot="end" name="arrow-forward"></ion-icon>
+      <ion-progress-bar *ngIf="approve2" color='light' type="indeterminate"></ion-progress-bar>
+    </ion-button>
+  </ion-item-group>
+</ion-list>
+</ion-content>
